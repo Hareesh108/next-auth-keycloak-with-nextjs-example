@@ -3,19 +3,19 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const Signin = () => {
+const Dashboard = () => {
   const router = useRouter();
-  const handleSignin = () => {
-    router.push("dashboard");
+  const handleLogout = () => {
+    router.push("/");
   };
 
   return (
     <div className="w-full h-lvh flex justify-center items-center border-red-900">
-      <button onClick={handleSignin} className="w-44 p-2 border-2">
-        Signin
+      <button onClick={handleLogout} className="w-44 p-2 border-2">
+        Logout
       </button>
     </div>
   );
 };
 
-export default Signin;
+export default Dashboard;
