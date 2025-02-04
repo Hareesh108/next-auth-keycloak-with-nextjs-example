@@ -10,8 +10,11 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="w-full h-lvh flex justify-center items-center border-red-900">
-      <button onClick={handleLogout} className="w-44 p-2 border-2">
+    <div className="w-full h-lvh flex justify-center items-center border-red-900 bg-slate-300">
+      <button
+        onClick={handleLogout}
+        className="w-44 py-4 border-2 bg-slate-700 text-white font-bold rounded-md"
+      >
         Logout
       </button>
     </div>
