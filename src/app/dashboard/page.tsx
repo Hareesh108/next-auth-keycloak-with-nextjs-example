@@ -1,12 +1,34 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 const Dashboard = () => {
-  const router = useRouter();
-  const handleLogout = () => {
-    router.push("/");
+  const { data: session } = useSession();
+
+  const handleLogout = async () => {
+    try {
+      // Explicitly call Keycloak logout endpoint
+      const logoutUrl = `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`;
+      const params = new URLSearchParams({
+        client_id: process.env.AUTH_KEYCLOAK_ID ?? "",
+        client_secret: process.env.AUTH_KEYCLOAK_SECRET ?? "",
+        refresh_token: session?.user?.refresh_token ?? "",
+      });
+      await fetch(logoutUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: params.toString(),
+      });
+
+      // await signOut();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      console.log("Signing out...");
+    }
   };
 
   return (
