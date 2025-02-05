@@ -4,11 +4,6 @@ import { signIn } from "next-auth/react";
 import React from "react";
 
 const Signin = () => {
-  // const router = useRouter();
-  // const handleSignin = () => {
-  //   router.push("dashboard");
-  // };
-
   return (
     <div className="w-full h-lvh flex justify-center items-center border-red-900">
       <button

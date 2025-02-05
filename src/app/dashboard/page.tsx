@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import React from "react";
 
 const Dashboard = () => {
@@ -11,8 +11,8 @@ const Dashboard = () => {
       // Explicitly call Keycloak logout endpoint
       const logoutUrl = `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`;
       const params = new URLSearchParams({
-        client_id: process.env.AUTH_KEYCLOAK_ID ?? "",
-        client_secret: process.env.AUTH_KEYCLOAK_SECRET ?? "",
+        client_id: process.env.NEXT_PUBLIC_KEYCLOAK_ID ?? "",
+        client_secret: process.env.NEXT_PUBLIC_KEYCLOAK_SECRET ?? "",
         refresh_token: session?.user?.refresh_token ?? "",
       });
       await fetch(logoutUrl, {
@@ -23,7 +23,7 @@ const Dashboard = () => {
         body: params.toString(),
       });
 
-      // await signOut();
+      await signOut();
     } catch (error) {
       console.error(error);
     } finally {
