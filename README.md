@@ -10,3 +10,12 @@
 - Client-side token expiration checks and reactive handling
 - Secure API routes with authenticated access
 - Error handling for token refresh failures
+
+### .env.local
+
+- AUTH_KEYCLOAK_ID=<keycloak clinet id>
+- AUTH_KEYCLOAK_SECRET=<keycloak clinet secret>
+- AUTH_KEYCLOAK_ISSUER=<keycloak clinet issuer or host>
+- AUTH_SECRET=<can generate with command check in docs>
+
+- NODE_ENV="development"
