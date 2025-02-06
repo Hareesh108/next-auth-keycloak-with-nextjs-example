@@ -22,18 +22,18 @@ export default {
       clientId: process.env.AUTH_KEYCLOAK_ID || "",
       clientSecret: process.env.AUTH_KEYCLOAK_SECRET || "",
       issuer: process.env.AUTH_KEYCLOAK_ISSUER || "",
-      authorization: {
-        params: {
-          scope: "openid email profile",
-        },
-      },
+      // authorization: {
+      //   params: {
+      //     scope: "openid email profile",
+      //   },
+      // },
     }),
   ],
-  pages: {
-    signIn: "/auth/login",
-    signOut: "/auth/logout",
-    error: "/auth/error",
-  },
+  // pages: {
+  //   signIn: "/auth/login",
+  //   signOut: "/auth/logout",
+  //   error: "/auth/error",
+  // },
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60, 
