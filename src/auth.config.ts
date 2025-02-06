@@ -7,6 +7,13 @@ declare module "next-auth" {
     roles?: string[];
     refresh_token?: string
   }
+  
+  interface Session {
+    user: User & {
+      access_token?: string;
+      refresh_token?: string;
+    }
+  }
 }
 
 export default {
@@ -15,28 +22,32 @@ export default {
       clientId: process.env.AUTH_KEYCLOAK_ID || "",
       clientSecret: process.env.AUTH_KEYCLOAK_SECRET || "",
       issuer: process.env.AUTH_KEYCLOAK_ISSUER || "",
-    //   authorization: {
-    //     params: {
-    //       scope: "openid email profile",
-    //     },
-    //   },
+      authorization: {
+        params: {
+          scope: "openid email profile",
+        },
+      },
     }),
   ],
-//   pages: {
-//     signIn: "/auth/login",
-//     signOut: "/auth/logout",
-//     error: "/auth/error",
-//   },
+  pages: {
+    signIn: "/auth/login",
+    signOut: "/auth/logout",
+    error: "/auth/error",
+  },
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60, 
   },
   callbacks: {
+    authorized: async ({ auth }) => {      
+      // Logged in users are authenticated, otherwise redirect to login page
+      return !!auth
+    },
     async jwt({ token, account, profile }) {      
       if (account) {
         token.access_token = account.access_token
         token.idToken = account.id_token
-        token.roles = profile?.roles || []
+        token.roles = profile?.roles || account.roles || []
         token.refresh_token = account.refresh_token
       }
       return token
@@ -49,7 +60,7 @@ export default {
       return session
     },
   },
-  debug: process.env.NODE_ENV === "development",
+  // debug: process.env.NODE_ENV === "development",
   secret: process.env.AUTH_SECRET,
   trustHost: true,
 } satisfies NextAuthConfig
